@@ -10,10 +10,11 @@ It allows running test flows without requiring a graphical interface.
 
 ## Main Capabilities
 
-* Run test flows via CLI
+* Run full test sessions via CLI
+* Run a single script for debugging
+* Execute raw FakeDevice commands for troubleshooting
+* Validate recipe and spec files before execution
 * Simulate test without hardware
-* Execute individual scripts
-* Validate recipe and spec
 * Export results (JSON / CSV / logs)
 
 ---
@@ -28,9 +29,11 @@ ats <command> [options]
 
 ---
 
-## Next
+## Included In Phase 2
 
-* Getting Started
-* CLI Commands
-* Recipe Format
-* Spec Format
+* `test simulate`
+* `test run`
+* `script run`
+* `device exec`
+* `recipe validate`
+* `spec validate`
