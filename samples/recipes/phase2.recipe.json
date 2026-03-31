@@ -1,0 +1,77 @@
+{
+  "name": "Phase 2 Recipe",
+  "scripts": [
+    {
+      "name": "ReadVoltage",
+      "command": "READ_VOLTAGE",
+      "measurementKey": "voltage",
+      "unit": "V",
+      "specKey": "voltage_range",
+      "simulatedResponse": "12.3"
+    },
+    {
+      "name": "ReadCurrent",
+      "command": "READ_CURRENT",
+      "measurementKey": "current",
+      "unit": "A",
+      "specKey": "current_less_than",
+      "simulatedResponse": "1.4"
+    },
+    {
+      "name": "ReadSerial",
+      "command": "READ_SERIAL",
+      "measurementKey": "serial",
+      "unit": "",
+      "specKey": "serial_regex",
+      "simulatedResponse": "ATS-FAKE-001"
+    },
+    {
+      "name": "ReadModel",
+      "command": "READ_MODEL",
+      "measurementKey": "model",
+      "unit": "",
+      "specKey": "model_contains",
+      "simulatedResponse": "MFG TEST SYSTEM"
+    },
+    {
+      "name": "ReadStation",
+      "command": "READ_STATION",
+      "measurementKey": "station",
+      "unit": "",
+      "specKey": "station_equal",
+      "simulatedResponse": "STATION-A"
+    },
+    {
+      "name": "ReadErrorState",
+      "command": "READ_ERROR",
+      "measurementKey": "error_state",
+      "unit": "",
+      "specKey": "error_not_equal",
+      "simulatedResponse": "NONE"
+    },
+    {
+      "name": "ReadTemperature",
+      "command": "READ_TEMPERATURE",
+      "measurementKey": "temperature",
+      "unit": "C",
+      "specKey": "temperature_greater_than",
+      "simulatedResponse": "35.5"
+    },
+    {
+      "name": "ReadLeakRate",
+      "command": "READ_LEAK_RATE",
+      "measurementKey": "leak_rate",
+      "unit": "sccm",
+      "specKey": "leak_less_than",
+      "simulatedResponse": "0.2"
+    },
+    {
+      "name": "CalibrationStatus",
+      "command": "CALIBRATION_STATUS",
+      "measurementKey": "calibration",
+      "unit": "",
+      "specKey": "calibration_bypass",
+      "simulatedResponse": "SKIPPED"
+    }
+  ]
+}

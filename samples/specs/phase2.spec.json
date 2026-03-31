@@ -1,0 +1,50 @@
+{
+  "name": "Phase 2 Specs",
+  "specs": [
+    {
+      "key": "voltage_range",
+      "operator": "Range",
+      "minimum": 11.5,
+      "maximum": 12.8
+    },
+    {
+      "key": "current_less_than",
+      "operator": "LessThan",
+      "expected": "1.8"
+    },
+    {
+      "key": "serial_regex",
+      "operator": "Regex",
+      "expected": "^ATS-FAKE-[0-9]{3}$"
+    },
+    {
+      "key": "model_contains",
+      "operator": "Contain",
+      "expected": "TEST"
+    },
+    {
+      "key": "station_equal",
+      "operator": "Equal",
+      "expected": "STATION-A"
+    },
+    {
+      "key": "error_not_equal",
+      "operator": "NotEqual",
+      "expected": "FAULT"
+    },
+    {
+      "key": "temperature_greater_than",
+      "operator": "GreaterThan",
+      "expected": "30"
+    },
+    {
+      "key": "leak_less_than",
+      "operator": "LessThan",
+      "expected": "0.5"
+    },
+    {
+      "key": "calibration_bypass",
+      "operator": "Bypass"
+    }
+  ]
+}

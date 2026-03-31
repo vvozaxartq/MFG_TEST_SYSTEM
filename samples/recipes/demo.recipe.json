@@ -1,0 +1,33 @@
+{
+  "name": "Demo Recipe",
+  "scripts": [
+    {
+      "name": "ReadVoltage",
+      "command": "READ_VOLTAGE",
+      "measurementKey": "voltage",
+      "unit": "V",
+      "specKey": "voltage",
+      "simulatedValue": 12.3
+    },
+    {
+      "name": "ReadCurrent",
+      "command": "READ_CURRENT",
+      "measurementKey": "current",
+      "unit": "A",
+      "specKey": "current",
+      "simulatedValue": 1.4
+    }
+  ],
+  "specs": [
+    {
+      "key": "voltage",
+      "minimum": 11.5,
+      "maximum": 12.8
+    },
+    {
+      "key": "current",
+      "minimum": 1.0,
+      "maximum": 1.8
+    }
+  ]
+}
