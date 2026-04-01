@@ -8,6 +8,8 @@ public sealed class FlowExecutionResult
 
     public string Status { get; init; } = string.Empty;
 
+    public List<StepResult> Steps { get; init; } = new();
+
     public List<ScriptResult> Scripts { get; init; } = new();
 
     public List<string> Errors { get; init; } = new();

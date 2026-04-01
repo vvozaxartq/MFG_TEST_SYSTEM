@@ -6,9 +6,15 @@ public sealed class ScriptResult
 
     public string Command { get; init; } = string.Empty;
 
+    public string Prefix { get; init; } = string.Empty;
+
     public string MeasurementKey { get; init; } = string.Empty;
 
+    public string FullKey { get; init; } = string.Empty;
+
     public string SpecKey { get; init; } = string.Empty;
+
+    public string RuleName { get; init; } = string.Empty;
 
     public string ActualValue { get; init; } = string.Empty;
 
@@ -23,6 +29,8 @@ public sealed class ScriptResult
     public decimal? Minimum { get; init; }
 
     public decimal? Maximum { get; init; }
+
+    public string ErrorCode { get; init; } = string.Empty;
 
     public string Status { get; init; } = string.Empty;
 

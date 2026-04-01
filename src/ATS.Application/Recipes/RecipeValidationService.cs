@@ -62,12 +62,13 @@ public sealed class RecipeValidationService
                 ? new SpecDocument
                 {
                     Name = $"{recipe.Name} Inline Specs",
+                    Rules = recipe.Rules,
                     Specs = recipe.Specs
                 }
                 : _specLoader.Load(context.SpecPath);
 
-            errors.AddRange(_specValidator.Validate(specDocument.Specs));
-            errors.AddRange(_recipeValidator.Validate(recipe, specDocument.Specs, string.Empty));
+            errors.AddRange(_specValidator.Validate(specDocument));
+            errors.AddRange(_recipeValidator.Validate(recipe, specDocument, string.Empty));
 
             foreach (var error in errors)
             {

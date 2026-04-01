@@ -1,11 +1,47 @@
 using System.Globalization;
 using ATS.Application.Recipes;
+using ATS.Core.Models;
 using ATS.Core.Specs;
 
 namespace ATS.Application.Specs;
 
 public sealed class SpecValidator
 {
+    public List<string> Validate(SpecDocument specDocument)
+    {
+        var errors = new List<string>();
+
+        if (specDocument.Rules.Count == 0 && specDocument.Specs.Count == 0)
+        {
+            errors.Add("Spec file must contain at least one spec rule or legacy spec definition.");
+            return errors;
+        }
+
+        var duplicateRuleNames = specDocument.Rules
+            .Where(item => !string.IsNullOrWhiteSpace(item.Name))
+            .GroupBy(item => item.Name, StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToList();
+
+        foreach (var duplicateRuleName in duplicateRuleNames)
+        {
+            errors.Add($"Duplicate spec rule name '{duplicateRuleName}' was found.");
+        }
+
+        foreach (var rule in specDocument.Rules)
+        {
+            ValidateRule(rule, errors);
+        }
+
+        if (specDocument.Specs.Count > 0)
+        {
+            errors.AddRange(Validate(specDocument.Specs));
+        }
+
+        return errors;
+    }
+
     public List<string> Validate(IReadOnlyCollection<SpecDefinition> specs)
     {
         var errors = new List<string>();
@@ -46,6 +82,71 @@ public sealed class SpecValidator
         }
 
         return errors;
+    }
+
+    private static void ValidateRule(SpecRule rule, List<string> errors)
+    {
+        if (string.IsNullOrWhiteSpace(rule.Name))
+        {
+            errors.Add("Spec rule name is required.");
+        }
+
+        if (string.IsNullOrWhiteSpace(rule.TargetKey))
+        {
+            errors.Add($"Spec rule '{rule.Name}' targetKey is required.");
+        }
+
+        if (!SpecOperatorParser.TryParse(rule.RuleType, out var specOperator))
+        {
+            errors.Add($"Spec rule '{rule.Name}' uses unsupported ruleType '{rule.RuleType}'.");
+            return;
+        }
+
+        switch (specOperator)
+        {
+            case SpecOperator.Bypass:
+                return;
+            case SpecOperator.Range:
+                if (!rule.Min.HasValue || !rule.Max.HasValue)
+                {
+                    errors.Add($"Spec rule '{rule.Name}' requires both min and max values.");
+                }
+
+                return;
+            case SpecOperator.Equal:
+            case SpecOperator.NotEqual:
+            case SpecOperator.Contain:
+                if (string.IsNullOrWhiteSpace(rule.Expected))
+                {
+                    errors.Add($"Spec rule '{rule.Name}' requires expected value.");
+                }
+
+                return;
+            case SpecOperator.Regex:
+                if (string.IsNullOrWhiteSpace(rule.Pattern) && string.IsNullOrWhiteSpace(rule.Expected))
+                {
+                    errors.Add($"Spec rule '{rule.Name}' requires pattern.");
+                }
+
+                return;
+            case SpecOperator.GreaterThan:
+            case SpecOperator.LessThan:
+                if (string.IsNullOrWhiteSpace(rule.Expected))
+                {
+                    errors.Add($"Spec rule '{rule.Name}' requires expected numeric value.");
+                    return;
+                }
+
+                if (!decimal.TryParse(rule.Expected, NumberStyles.Number, CultureInfo.InvariantCulture, out _))
+                {
+                    errors.Add($"Spec rule '{rule.Name}' expected numeric value '{rule.Expected}'.");
+                }
+
+                return;
+            default:
+                errors.Add($"Spec rule '{rule.Name}' uses unsupported ruleType '{rule.RuleType}'.");
+                return;
+        }
     }
 
     private static void ValidateOperator(

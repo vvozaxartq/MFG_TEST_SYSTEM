@@ -25,8 +25,14 @@ public sealed class RecipeLoader
         var recipe = JsonSerializer.Deserialize<RecipeDefinition>(json, JsonOptions)
             ?? throw new InvalidOperationException("Recipe file could not be parsed.");
 
+        recipe.Rules ??= new List<ATS.Core.Models.SpecRule>();
         recipe.Scripts ??= new List<RecipeScriptDefinition>();
         recipe.Specs ??= new List<SpecDefinition>();
+
+        foreach (var script in recipe.Scripts)
+        {
+            script.Measurements ??= new List<RecipeMeasurementDefinition>();
+        }
 
         return recipe;
     }

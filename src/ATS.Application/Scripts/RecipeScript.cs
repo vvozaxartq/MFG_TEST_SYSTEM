@@ -1,4 +1,5 @@
 using System.Globalization;
+using ATS.Application.Measurements;
 using ATS.Application.Recipes;
 using ATS.Core.Devices;
 using ATS.Core.Models;
@@ -8,7 +9,14 @@ namespace ATS.Application.Scripts;
 
 internal sealed class RecipeScript : ScriptBase
 {
-    public RecipeScript(RecipeScriptDefinition definition)
+    private readonly RecipeScriptDefinition _definition;
+    private readonly MeasurementSetBuilder _measurementSetBuilder;
+    private readonly RecipeDefinition _recipe;
+
+    public RecipeScript(
+        RecipeDefinition recipe,
+        RecipeScriptDefinition definition,
+        MeasurementSetBuilder measurementSetBuilder)
         : base(
             definition.Name,
             definition.Command,
@@ -17,6 +25,9 @@ internal sealed class RecipeScript : ScriptBase
             definition.SpecKey,
             ResolveSimulatedResponse(definition))
     {
+        _definition = definition;
+        _recipe = recipe;
+        _measurementSetBuilder = measurementSetBuilder;
     }
 
     public override async Task<ScriptExecutionResult> ExecuteAsync(
@@ -38,25 +49,16 @@ internal sealed class RecipeScript : ScriptBase
             throw new InvalidOperationException(response.Message);
         }
 
-        context.Data.Set(MeasurementKey, response.Response);
-
-        var numericValue = decimal.TryParse(
-            response.Response,
-            NumberStyles.Number,
-            CultureInfo.InvariantCulture,
-            out var parsedValue)
-            ? (decimal?)parsedValue
-            : null;
+        var collectedAt = DateTimeOffset.UtcNow;
+        var measurementSet = _measurementSetBuilder.Build(_recipe, _definition, response.Response, collectedAt);
 
         return new ScriptExecutionResult
         {
             ScriptName = Name,
             Command = Command,
-            MeasurementKey = MeasurementKey,
-            Unit = Unit,
+            Prefix = _definition.Prefix,
             SpecKey = SpecKey,
-            RawValue = response.Response,
-            NumericValue = numericValue
+            MeasurementSet = measurementSet
         };
     }
 

@@ -44,7 +44,7 @@ public sealed class SpecValidationService
         try
         {
             var specDocument = _specLoader.Load(context.SpecPath);
-            errors.AddRange(_specValidator.Validate(specDocument.Specs));
+            errors.AddRange(_specValidator.Validate(specDocument));
 
             foreach (var error in errors)
             {

@@ -1,0 +1,37 @@
+{
+  "name": "Multi Measurement Recipe",
+  "scripts": [
+    {
+      "name": "BatterySnapshot",
+      "command": "READ_BATTERY_SNAPSHOT",
+      "prefix": "battery",
+      "measurements": [
+        {
+          "key": "voltage",
+          "unit": "V"
+        },
+        {
+          "key": "current",
+          "unit": "A"
+        }
+      ],
+      "simulatedResponse": "{\"voltage\":12.3,\"current\":1.4}"
+    },
+    {
+      "name": "LoadSnapshot",
+      "command": "READ_BATTERY_SNAPSHOT",
+      "prefix": "load",
+      "measurements": [
+        {
+          "key": "voltage",
+          "unit": "V"
+        },
+        {
+          "key": "current",
+          "unit": "A"
+        }
+      ],
+      "simulatedResponse": "{\"voltage\":11.8,\"current\":1.6}"
+    }
+  ]
+}

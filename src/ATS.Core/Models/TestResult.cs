@@ -22,6 +22,8 @@ public sealed class TestResult
 
     public double DurationSeconds => (CompletedAtUtc - StartedAtUtc).TotalSeconds;
 
+    public List<StepResult> Steps { get; init; } = new();
+
     public List<ScriptResult> Scripts { get; init; } = new();
 
     public List<string> Errors { get; init; } = new();

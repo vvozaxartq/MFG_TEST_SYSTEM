@@ -3,6 +3,26 @@
   "WorkspaceRootPath": "X:\\Github\\MFG_TEST_SYSTEM\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\execution\\deviceexecutor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\execution\\deviceexecutor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\scripts\\recipescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\scripts\\recipescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\recipes\\recipedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\recipes\\recipedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\flow\\flowengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\flow\\flowengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\flow\\flowexecutionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\flow\\flowexecutionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{C94AA112-3092-4CCE-B6CE-13F95B992706}|tests\\ATS.Tests\\ATS.Tests.csproj|x:\\github\\mfg_test_system\\tests\\ats.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{C94AA112-3092-4CCE-B6CE-13F95B992706}|tests\\ATS.Tests\\ATS.Tests.csproj|solutionrelative:tests\\ats.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
@@ -14,24 +34,84 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 1,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "DeviceExecutor.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Execution\\DeviceExecutor.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Execution\\DeviceExecutor.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Execution\\DeviceExecutor.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Execution\\DeviceExecutor.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T22:53:55.87Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RecipeScript.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Scripts\\RecipeScript.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Scripts\\RecipeScript.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Scripts\\RecipeScript.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Scripts\\RecipeScript.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAwwAoAAAAYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T22:52:46.264Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "RecipeDefinition.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAiAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T22:47:52.879Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "FlowExecutionResult.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T22:47:18.365Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "FlowEngine.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowEngine.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Flow\\FlowEngine.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowEngine.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Flow\\FlowEngine.cs",
+              "ViewState": "AgIAAAoAAAAAAAAAAAAmwBIAAAAbAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-03-31T22:47:08.375Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Program.cs",
               "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\tests\\ATS.Tests\\Program.cs",
               "RelativeDocumentMoniker": "tests\\ATS.Tests\\Program.cs",
               "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\tests\\ATS.Tests\\Program.cs",
               "RelativeToolTip": "tests\\ATS.Tests\\Program.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAwwAcAAAAWAAAAAAAAAA==",
+              "ViewState": "AgIAABwAAAAAAAAAAAAAwCwAAAAZAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T15:24:05.455Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2026-03-31T15:24:05.455Z"
             }
           ]
         }

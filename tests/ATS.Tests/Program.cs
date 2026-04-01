@@ -14,11 +14,14 @@ internal static class TestSuite
 
         await RunTestAsync("SpecEngine supports all Phase 2 operators", TestSpecEngineSupportsAllOperatorsAsync, failures);
         await RunTestAsync("Simulation writes expected artifacts", TestSimulationWritesArtifactsAsync, failures);
-        await RunTestAsync("TestRunner supports external spec file", TestRunnerSupportsExternalSpecFileAsync, failures);
+        await RunTestAsync("TestRunner supports external legacy spec file", TestRunnerSupportsExternalSpecFileAsync, failures);
+        await RunTestAsync("TestRunner supports multi-measurement prefixes", TestRunnerSupportsMultiMeasurementPrefixesAsync, failures);
         await RunTestAsync("ScriptRunner executes selected script only", TestScriptRunnerExecutesSelectedScriptAsync, failures);
         await RunTestAsync("DeviceExecutor writes device artifacts", TestDeviceExecutorWritesArtifactsAsync, failures);
         await RunTestAsync("Recipe validation passes for Phase 2 sample", TestRecipeValidationPassesAsync, failures);
         await RunTestAsync("Spec validation passes for Phase 2 sample", TestSpecValidationPassesAsync, failures);
+        await RunTestAsync("Recipe validation passes for multi-measurement sample", TestMultiMeasurementRecipeValidationPassesAsync, failures);
+        await RunTestAsync("Spec validation passes for multi-measurement sample", TestMultiMeasurementSpecValidationPassesAsync, failures);
         await RunTestAsync("Invalid test run preserves session artifacts", TestInvalidRunPreservesArtifactsAsync, failures);
 
         if (failures.Count == 0)
@@ -55,14 +58,14 @@ internal static class TestSuite
     {
         var engine = new SpecEngine();
 
-        AssertEqual("Passed", Evaluate(engine, "12.3", 12.3m, "Range", minimum: 11.5m, maximum: 12.8m).Status, "Range should pass.");
-        AssertEqual("Passed", Evaluate(engine, "READY", null, "Equal", expected: "READY").Status, "Equal should pass.");
-        AssertEqual("Passed", Evaluate(engine, "READY", null, "NotEqual", expected: "FAULT").Status, "NotEqual should pass.");
-        AssertEqual("Passed", Evaluate(engine, "35.5", 35.5m, "GreaterThan", expected: "30").Status, "GreaterThan should pass.");
-        AssertEqual("Passed", Evaluate(engine, "0.2", 0.2m, "LessThan", expected: "0.5").Status, "LessThan should pass.");
-        AssertEqual("Passed", Evaluate(engine, "ATS-FAKE-001", null, "Regex", expected: "^ATS-FAKE-[0-9]{3}$").Status, "Regex should pass.");
-        AssertEqual("Passed", Evaluate(engine, "MFG TEST SYSTEM", null, "Contain", expected: "TEST").Status, "Contain should pass.");
-        AssertEqual("Passed", Evaluate(engine, "IGNORED", null, "Bypass").Status, "Bypass should pass.");
+        AssertEqual("Passed", Evaluate(engine, "12.3", "Range", min: 11.5m, max: 12.8m).Status, "Range should pass.");
+        AssertEqual("Passed", Evaluate(engine, "READY", "Equal", expected: "READY").Status, "Equal should pass.");
+        AssertEqual("Passed", Evaluate(engine, "READY", "NotEqual", expected: "FAULT").Status, "NotEqual should pass.");
+        AssertEqual("Passed", Evaluate(engine, "35.5", "GreaterThan", expected: "30").Status, "GreaterThan should pass.");
+        AssertEqual("Passed", Evaluate(engine, "0.2", "LessThan", expected: "0.5").Status, "LessThan should pass.");
+        AssertEqual("Passed", Evaluate(engine, "ATS-FAKE-001", "Regex", expected: "^ATS-FAKE-[0-9]{3}$").Status, "Regex should pass.");
+        AssertEqual("Passed", Evaluate(engine, "MFG TEST SYSTEM", "Contain", expected: "TEST").Status, "Contain should pass.");
+        AssertEqual("Passed", Evaluate(engine, "IGNORED", "Bypass").Status, "Bypass should pass.");
 
         return Task.CompletedTask;
     }
@@ -97,6 +100,30 @@ internal static class TestSuite
         AssertArtifactsExist(outputDirectory);
     }
 
+    private static async Task TestRunnerSupportsMultiMeasurementPrefixesAsync()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var recipePath = Path.Combine(repositoryRoot, "samples", "recipes", "multi-measurement.recipe.json");
+        var specPath = Path.Combine(repositoryRoot, "samples", "specs", "multi-measurement.spec.json");
+        var outputDirectory = CreateOutputDirectory("multi-measurement");
+        var runner = new TestRunner();
+
+        var result = await runner.RunAsync(
+            new TestRunRequest("test run", recipePath, specPath, outputDirectory, string.Empty),
+            CancellationToken.None);
+
+        AssertEqual("Passed", result.Status, "Expected multi-measurement run to pass.");
+        AssertEqual("2", result.Steps.Count.ToString(), "Expected two step results.");
+        AssertEqual("4", result.Steps.SelectMany(item => item.Measurements).Count().ToString(), "Expected four measurements.");
+        AssertTrue(
+            result.Steps.SelectMany(item => item.Measurements).Any(item => item.FullKey == "battery.voltage"),
+            "Expected battery.voltage fullKey.");
+        AssertTrue(
+            result.Steps.SelectMany(item => item.SpecResults).Any(item => item.TargetKey == "load.current"),
+            "Expected load.current spec evaluation.");
+        AssertArtifactsExist(outputDirectory);
+    }
+
     private static async Task TestScriptRunnerExecutesSelectedScriptAsync()
     {
         var repositoryRoot = FindRepositoryRoot();
@@ -113,8 +140,8 @@ internal static class TestSuite
             CancellationToken.None);
 
         AssertEqual("Passed", result.Status, "Expected selected script to pass.");
-        AssertEqual("1", result.Scripts.Count.ToString(), "Expected only one script result.");
-        AssertEqual("ReadSerial", result.Scripts[0].ScriptName, "Expected selected script name to match.");
+        AssertEqual("1", result.Steps.Count.ToString(), "Expected only one step result.");
+        AssertEqual("ReadSerial", result.Steps[0].StepName, "Expected selected script name to match.");
         AssertArtifactsExist(outputDirectory);
     }
 
@@ -159,6 +186,33 @@ internal static class TestSuite
         AssertArtifactsExist(outputDirectory);
     }
 
+    private static async Task TestMultiMeasurementRecipeValidationPassesAsync()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var recipePath = Path.Combine(repositoryRoot, "samples", "recipes", "multi-measurement.recipe.json");
+        var specPath = Path.Combine(repositoryRoot, "samples", "specs", "multi-measurement.spec.json");
+        var outputDirectory = CreateOutputDirectory("multi-recipe-validate");
+        var service = new RecipeValidationService();
+
+        var result = await service.ValidateAsync(recipePath, specPath, outputDirectory, CancellationToken.None);
+
+        AssertEqual("Passed", result.Status, "Expected multi-measurement recipe validation to pass.");
+        AssertArtifactsExist(outputDirectory);
+    }
+
+    private static async Task TestMultiMeasurementSpecValidationPassesAsync()
+    {
+        var repositoryRoot = FindRepositoryRoot();
+        var specPath = Path.Combine(repositoryRoot, "samples", "specs", "multi-measurement.spec.json");
+        var outputDirectory = CreateOutputDirectory("multi-spec-validate");
+        var service = new SpecValidationService();
+
+        var result = await service.ValidateAsync(specPath, outputDirectory, CancellationToken.None);
+
+        AssertEqual("Passed", result.Status, "Expected multi-measurement spec validation to pass.");
+        AssertArtifactsExist(outputDirectory);
+    }
+
     private static async Task TestInvalidRunPreservesArtifactsAsync()
     {
         var outputDirectory = CreateOutputDirectory("invalid-run");
@@ -195,30 +249,45 @@ internal static class TestSuite
     private static ScriptResult Evaluate(
         SpecEngine engine,
         string rawValue,
-        decimal? numericValue,
-        string specOperator,
+        string ruleType,
         string expected = "",
-        decimal? minimum = null,
-        decimal? maximum = null)
+        decimal? min = null,
+        decimal? max = null)
     {
         return engine.Evaluate(
             new ScriptExecutionResult
             {
                 ScriptName = "SampleScript",
                 Command = "SAMPLE",
-                MeasurementKey = "sample",
-                Unit = string.Empty,
                 SpecKey = "sample_spec",
-                RawValue = rawValue,
-                NumericValue = numericValue
+                MeasurementSet = new MeasurementSet
+                {
+                    Source = "SampleScript",
+                    Command = "SAMPLE",
+                    CollectedAt = DateTimeOffset.UtcNow,
+                    RawPayload = rawValue,
+                    Items = new List<MeasurementItem>
+                    {
+                        new()
+                        {
+                            Key = "sample",
+                            Prefix = string.Empty,
+                            FullKey = "sample",
+                            Value = rawValue,
+                            ValueType = decimal.TryParse(rawValue, out _) ? MeasurementValueType.Number : MeasurementValueType.Text,
+                            Unit = string.Empty,
+                            RawText = rawValue
+                        }
+                    }
+                }
             },
             new SpecDefinition
             {
                 Key = "sample_spec",
-                Operator = specOperator,
+                Operator = ruleType,
                 Expected = expected,
-                Minimum = minimum,
-                Maximum = maximum
+                Minimum = min,
+                Maximum = max
             });
     }
 

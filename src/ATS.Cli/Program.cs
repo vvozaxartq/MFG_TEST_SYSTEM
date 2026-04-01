@@ -185,10 +185,30 @@ internal static class CliProgram
         Console.WriteLine($"Device: {result.DeviceName}");
         Console.WriteLine($"Session: {result.SessionId}");
 
-        foreach (var script in result.Scripts)
+        foreach (var step in result.Steps)
         {
-            Console.WriteLine(
-                $"{script.ScriptName}: {script.Status} ({script.ActualValue}, operator {script.Operator}, expected {script.Expected})");
+            Console.WriteLine($"{step.StepName}: {step.FinalStatus}");
+
+            foreach (var measurement in step.Measurements)
+            {
+                var unitSuffix = string.IsNullOrWhiteSpace(measurement.Unit) ? string.Empty : $" {measurement.Unit}";
+                Console.WriteLine($"  measurement {measurement.FullKey} = {measurement.Value}{unitSuffix}");
+            }
+
+            foreach (var specResult in step.SpecResults)
+            {
+                Console.WriteLine(
+                    $"  rule {specResult.RuleName} -> {specResult.PassFail} ({specResult.TargetKey} = {specResult.ActualValue})");
+            }
+        }
+
+        if (result.Steps.Count == 0)
+        {
+            foreach (var script in result.Scripts)
+            {
+                Console.WriteLine(
+                    $"{script.ScriptName}: {script.Status} ({script.ActualValue}, operator {script.Operator}, message {script.Message})");
+            }
         }
 
         foreach (var error in result.Errors)

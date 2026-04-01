@@ -1,10 +1,12 @@
+using ATS.Application.Specs;
+
 namespace ATS.Application.Recipes;
 
 public sealed class RecipeValidator
 {
     public List<string> Validate(
         RecipeDefinition recipe,
-        IReadOnlyCollection<SpecDefinition> specs,
+        SpecDocument specDocument,
         string selectedScriptName)
     {
         var errors = new List<string>();
@@ -31,14 +33,16 @@ public sealed class RecipeValidator
             errors.Add($"Duplicate script name '{duplicateScriptName}' was found.");
         }
 
-        var specKeys = new HashSet<string>(
-            specs.Select(item => item.Key),
+        var legacySpecKeys = new HashSet<string>(
+            specDocument.Specs.Select(item => item.Key),
             StringComparer.OrdinalIgnoreCase);
 
-        if (specKeys.Count == 0)
+        if (legacySpecKeys.Count == 0 && specDocument.Rules.Count == 0)
         {
-            errors.Add("No spec definitions were found. Provide inline recipe specs or use --spec.");
+            errors.Add("No spec definitions were found. Provide inline recipe rules/specs or use --spec.");
         }
+
+        var declaredFullKeys = new List<(string StepName, string FullKey)>();
 
         foreach (var script in recipe.Scripts)
         {
@@ -52,19 +56,66 @@ public sealed class RecipeValidator
                 errors.Add($"Script '{script.Name}' command is required.");
             }
 
-            if (string.IsNullOrWhiteSpace(script.MeasurementKey))
+            var measurements = RecipeStepDefinitionHelper.GetDeclaredMeasurements(recipe, script);
+
+            if (measurements.Count == 0)
             {
-                errors.Add($"Script '{script.Name}' measurementKey is required.");
+                errors.Add($"Script '{script.Name}' must declare at least one measurement.");
             }
 
-            if (string.IsNullOrWhiteSpace(script.SpecKey))
+            var duplicateMeasurementKeys = measurements
+                .GroupBy(item => item.FullKey, StringComparer.OrdinalIgnoreCase)
+                .Where(group => group.Count() > 1)
+                .Select(group => group.Key)
+                .ToList();
+
+            foreach (var duplicateMeasurementKey in duplicateMeasurementKeys)
             {
-                errors.Add($"Script '{script.Name}' specKey is required.");
+                errors.Add($"Script '{script.Name}' contains duplicate measurement fullKey '{duplicateMeasurementKey}'.");
             }
-            else if (specKeys.Count > 0 && !specKeys.Contains(script.SpecKey))
+
+            foreach (var measurement in measurements)
             {
-                errors.Add($"Script '{script.Name}' references missing spec '{script.SpecKey}'.");
+                declaredFullKeys.Add((script.Name, measurement.FullKey));
             }
+
+            if (!string.IsNullOrWhiteSpace(script.SpecKey))
+            {
+                if (measurements.Count != 1)
+                {
+                    errors.Add(
+                        $"Script '{script.Name}' uses legacy specKey '{script.SpecKey}' but declares multiple measurements.");
+                }
+                else if (!legacySpecKeys.Contains(script.SpecKey))
+                {
+                    errors.Add($"Script '{script.Name}' references missing spec '{script.SpecKey}'.");
+                }
+            }
+            else
+            {
+                foreach (var measurement in measurements)
+                {
+                    var hasMatchingRule = specDocument.Rules.Any(item =>
+                        string.Equals(item.TargetKey, measurement.FullKey, StringComparison.OrdinalIgnoreCase));
+
+                    if (!hasMatchingRule)
+                    {
+                        errors.Add(
+                            $"Script '{script.Name}' measurement '{measurement.FullKey}' does not have a matching spec rule.");
+                    }
+                }
+            }
+        }
+
+        var duplicateFullKeysAcrossSteps = declaredFullKeys
+            .GroupBy(item => item.FullKey, StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToList();
+
+        foreach (var duplicateFullKey in duplicateFullKeysAcrossSteps)
+        {
+            errors.Add($"Duplicate measurement fullKey '{duplicateFullKey}' was found across recipe steps.");
         }
 
         if (!string.IsNullOrWhiteSpace(selectedScriptName) &&

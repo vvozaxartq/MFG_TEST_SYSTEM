@@ -1,5 +1,5 @@
-using ATS.Application.Recipes;
 using ATS.Core.Specs;
+using ATS.Core.Models;
 
 namespace ATS.Application.Specs;
 
@@ -31,13 +31,14 @@ internal static class SpecOperatorParser
         return Enum.TryParse(value, true, out specOperator);
     }
 
-    public static string BuildExpectedDescription(SpecOperator specOperator, SpecDefinition spec)
+    public static string BuildExpectedDescription(SpecOperator specOperator, SpecRule rule)
     {
         return specOperator switch
         {
             SpecOperator.Bypass => "Bypass",
-            SpecOperator.Range => $"{spec.Minimum} to {spec.Maximum}",
-            _ => spec.Expected
+            SpecOperator.Range => $"{rule.Min} to {rule.Max}",
+            SpecOperator.Regex => string.IsNullOrWhiteSpace(rule.Pattern) ? rule.Expected : rule.Pattern,
+            _ => rule.Expected
         };
     }
 }

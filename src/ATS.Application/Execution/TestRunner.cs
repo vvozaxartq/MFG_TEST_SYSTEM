@@ -59,6 +59,7 @@ public sealed class TestRunner
         var recipeName = string.Empty;
         var deviceName = "FakeDevice";
         var status = "Error";
+        var steps = new List<StepResult>();
         var scripts = new List<ScriptResult>();
         var errors = new List<string>();
 
@@ -70,8 +71,8 @@ public sealed class TestRunner
             recipeName = recipe.Name;
 
             var specDocument = LoadSpecDocument(recipe, context.SpecPath);
-            var specErrors = _specValidator.Validate(specDocument.Specs);
-            var recipeErrors = _recipeValidator.Validate(recipe, specDocument.Specs, context.SelectedScriptName);
+            var specErrors = _specValidator.Validate(specDocument);
+            var recipeErrors = _recipeValidator.Validate(recipe, specDocument, context.SelectedScriptName);
 
             foreach (var error in specErrors.Concat(recipeErrors))
             {
@@ -81,14 +82,9 @@ public sealed class TestRunner
 
             if (errors.Count == 0)
             {
-                var specsByKey = specDocument.Specs.ToDictionary(
-                    item => item.Key,
-                    item => item,
-                    StringComparer.OrdinalIgnoreCase);
-
                 var flowResult = await _flowEngine.RunAsync(
                     recipe,
-                    specsByKey,
+                    specDocument,
                     new FakeDevice(),
                     context,
                     context.SelectedScriptName,
@@ -96,6 +92,7 @@ public sealed class TestRunner
 
                 deviceName = flowResult.DeviceName;
                 status = flowResult.Status;
+                steps = flowResult.Steps;
                 scripts = flowResult.Scripts;
                 errors.AddRange(flowResult.Errors);
             }
@@ -135,6 +132,7 @@ public sealed class TestRunner
             Status = status,
             StartedAtUtc = context.StartedAtUtc,
             CompletedAtUtc = DateTimeOffset.UtcNow,
+            Steps = steps,
             Scripts = scripts,
             Errors = errors
         };
@@ -153,6 +151,7 @@ public sealed class TestRunner
         return new SpecDocument
         {
             Name = $"{recipe.Name} Inline Specs",
+            Rules = recipe.Rules,
             Specs = recipe.Specs
         };
     }

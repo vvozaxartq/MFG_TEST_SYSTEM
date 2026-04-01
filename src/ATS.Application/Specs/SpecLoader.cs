@@ -25,6 +25,7 @@ public sealed class SpecLoader
         var specDocument = JsonSerializer.Deserialize<SpecDocument>(json, JsonOptions)
             ?? throw new InvalidOperationException("Spec file could not be parsed.");
 
+        specDocument.Rules ??= new List<ATS.Core.Models.SpecRule>();
         specDocument.Specs ??= new List<Recipes.SpecDefinition>();
         return specDocument;
     }
