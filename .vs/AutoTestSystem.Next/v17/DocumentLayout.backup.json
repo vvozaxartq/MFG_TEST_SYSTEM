@@ -3,24 +3,52 @@
   "WorkspaceRootPath": "X:\\Github\\MFG_TEST_SYSTEM\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\execution\\deviceexecutor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\execution\\deviceexecutor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|X:\\Github\\MFG_TEST_SYSTEM\\.ui-output\\simulate\\result.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|solutionrelative:.ui-output\\simulate\\result.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\scripts\\recipescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\scripts\\recipescript.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\ats.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\ats.core.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\recipes\\recipedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\recipes\\recipedefinition.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{E2F65D27-4637-4FB4-9141-0E5A5095A62F}|src\\ATS.Cli\\ATS.Cli.csproj|x:\\github\\mfg_test_system\\src\\ats.cli\\ats.cli.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{E2F65D27-4637-4FB4-9141-0E5A5095A62F}|src\\ATS.Cli\\ATS.Cli.csproj|solutionrelative:src\\ats.cli\\ats.cli.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\ats.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\ats.application.csproj||{FA3CD31E-987B-443A-9B81-186104E8DAC1}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\devices\\devicesession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\devices\\devicesession.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\models\\dutcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\models\\dutcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\models\\datacollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\models\\datacollection.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\flow\\flowengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\flow\\flowengine.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\flow\\flowexecutionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\flow\\flowexecutionresult.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\devices\\idevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\devices\\idevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\devices\\devicecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\devices\\devicecommandresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|x:\\github\\mfg_test_system\\src\\ats.core\\devices\\devicecommandrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{0C0A5681-AE68-4415-AE6B-4DC497F3F13D}|src\\ATS.Core\\ATS.Core.csproj|solutionrelative:src\\ats.core\\devices\\devicecommandrequest.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|x:\\github\\mfg_test_system\\src\\ats.application\\devices\\fakedevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{38584A96-1258-42BE-8E91-3902A66D1563}|src\\ATS.Application\\ATS.Application.csproj|solutionrelative:src\\ats.application\\devices\\fakedevice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{C94AA112-3092-4CCE-B6CE-13F95B992706}|tests\\ATS.Tests\\ATS.Tests.csproj|x:\\github\\mfg_test_system\\tests\\ats.tests\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -34,84 +62,164 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
-            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "DeviceExecutor.cs",
-              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Execution\\DeviceExecutor.cs",
-              "RelativeDocumentMoniker": "src\\ATS.Application\\Execution\\DeviceExecutor.cs",
-              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Execution\\DeviceExecutor.cs",
-              "RelativeToolTip": "src\\ATS.Application\\Execution\\DeviceExecutor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T22:53:55.87Z",
+              "Title": "result.json",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\.ui-output\\simulate\\result.json",
+              "RelativeDocumentMoniker": ".ui-output\\simulate\\result.json",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\.ui-output\\simulate\\result.json",
+              "RelativeToolTip": ".ui-output\\simulate\\result.json",
+              "ViewState": "AgIAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-04-13T15:53:02.988Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RecipeScript.cs",
-              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Scripts\\RecipeScript.cs",
-              "RelativeDocumentMoniker": "src\\ATS.Application\\Scripts\\RecipeScript.cs",
-              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Scripts\\RecipeScript.cs",
-              "RelativeToolTip": "src\\ATS.Application\\Scripts\\RecipeScript.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAwwAoAAAAYAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T22:52:46.264Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "RecipeDefinition.cs",
-              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
-              "RelativeDocumentMoniker": "src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
-              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
-              "RelativeToolTip": "src\\ATS.Application\\Recipes\\RecipeDefinition.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAiAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T22:47:52.879Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "FlowExecutionResult.cs",
-              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
-              "RelativeDocumentMoniker": "src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
-              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
-              "RelativeToolTip": "src\\ATS.Application\\Flow\\FlowExecutionResult.cs",
+              "DocumentIndex": 5,
+              "Title": "DutContext.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Models\\DutContext.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\Models\\DutContext.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Models\\DutContext.cs",
+              "RelativeToolTip": "src\\ATS.Core\\Models\\DutContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T22:47:18.365Z"
+              "WhenOpened": "2026-04-13T13:16:31.611Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 6,
+              "Title": "DataCollection.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Models\\DataCollection.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\Models\\DataCollection.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Models\\DataCollection.cs",
+              "RelativeToolTip": "src\\ATS.Core\\Models\\DataCollection.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAUwAYAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T13:16:04.158Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
               "Title": "FlowEngine.cs",
               "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowEngine.cs",
               "RelativeDocumentMoniker": "src\\ATS.Application\\Flow\\FlowEngine.cs",
               "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Flow\\FlowEngine.cs",
               "RelativeToolTip": "src\\ATS.Application\\Flow\\FlowEngine.cs",
-              "ViewState": "AgIAAAoAAAAAAAAAAAAmwBIAAAAbAAAAAAAAAA==",
+              "ViewState": "AgIAABsAAAAAAAAAAAAIwCQAAAA0AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T22:47:08.375Z"
+              "WhenOpened": "2026-04-13T12:32:19.051Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 8,
+              "Title": "IDevice.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\IDevice.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\Devices\\IDevice.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\IDevice.cs",
+              "RelativeToolTip": "src\\ATS.Core\\Devices\\IDevice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T11:29:11.034Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "DeviceCommandRequest.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\DeviceCommandRequest.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\Devices\\DeviceCommandRequest.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\DeviceCommandRequest.cs",
+              "RelativeToolTip": "src\\ATS.Core\\Devices\\DeviceCommandRequest.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T11:29:03.051Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "FakeDevice.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Devices\\FakeDevice.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Devices\\FakeDevice.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Devices\\FakeDevice.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Devices\\FakeDevice.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T00:15:16.254Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "ATS.Core.csproj",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\ATS.Core.csproj",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\ATS.Core.csproj",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\ATS.Core.csproj",
+              "RelativeToolTip": "src\\ATS.Core\\ATS.Core.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-04T00:15:13.393Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "DeviceSession.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Devices\\DeviceSession.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\Devices\\DeviceSession.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\Devices\\DeviceSession.cs",
+              "RelativeToolTip": "src\\ATS.Application\\Devices\\DeviceSession.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-13T13:20:26.383Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "ATS.Application.csproj",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\ATS.Application.csproj",
+              "RelativeDocumentMoniker": "src\\ATS.Application\\ATS.Application.csproj",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Application\\ATS.Application.csproj",
+              "RelativeToolTip": "src\\ATS.Application\\ATS.Application.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-13T13:21:12.269Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "ATS.Cli.csproj",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Cli\\ATS.Cli.csproj",
+              "RelativeDocumentMoniker": "src\\ATS.Cli\\ATS.Cli.csproj",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Cli\\ATS.Cli.csproj",
+              "RelativeToolTip": "src\\ATS.Cli\\ATS.Cli.csproj",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2026-04-03T14:27:09.68Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DeviceCommandResponse.cs",
+              "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\DeviceCommandResponse.cs",
+              "RelativeDocumentMoniker": "src\\ATS.Core\\Devices\\DeviceCommandResponse.cs",
+              "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\src\\ATS.Core\\Devices\\DeviceCommandResponse.cs",
+              "RelativeToolTip": "src\\ATS.Core\\Devices\\DeviceCommandResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-04T11:29:05.998Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "Program.cs",
               "DocumentMoniker": "X:\\Github\\MFG_TEST_SYSTEM\\tests\\ATS.Tests\\Program.cs",
               "RelativeDocumentMoniker": "tests\\ATS.Tests\\Program.cs",
               "ToolTip": "X:\\Github\\MFG_TEST_SYSTEM\\tests\\ATS.Tests\\Program.cs",
               "RelativeToolTip": "tests\\ATS.Tests\\Program.cs",
-              "ViewState": "AgIAABwAAAAAAAAAAAAAwCwAAAAZAAAAAAAAAA==",
+              "ViewState": "AgIAAGsAAAAAAAAAAAAowHQAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-31T15:24:05.455Z"
+              "WhenOpened": "2026-04-03T14:30:42.147Z"
             }
           ]
         }

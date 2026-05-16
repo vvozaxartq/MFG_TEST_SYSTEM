@@ -4,6 +4,9 @@ internal static class RecipeStepDefinitionHelper
 {
     public static string GetEffectivePrefix(RecipeDefinition recipe, RecipeScriptDefinition step)
     {
+        ArgumentNullException.ThrowIfNull(recipe);
+        ArgumentNullException.ThrowIfNull(step);
+
         return string.IsNullOrWhiteSpace(step.Prefix)
             ? recipe.Prefix
             : step.Prefix;
@@ -47,6 +50,11 @@ internal static class RecipeStepDefinitionHelper
 
     public static string BuildFullKey(string prefix, string key)
     {
+        if (string.IsNullOrWhiteSpace(key))
+        {
+            throw new InvalidOperationException("Measurement key is required to build fullKey.");
+        }
+
         return string.IsNullOrWhiteSpace(prefix)
             ? key
             : $"{prefix}.{key}";

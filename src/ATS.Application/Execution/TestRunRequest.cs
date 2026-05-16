@@ -1,3 +1,5 @@
+using ATS.Core.Models;
+
 namespace ATS.Application.Execution;
 
 public sealed record TestRunRequest(
@@ -5,4 +7,6 @@ public sealed record TestRunRequest(
     string RecipePath,
     string SpecPath,
     string OutputDirectory,
-    string SelectedScriptName);
+    string SelectedScriptName,
+    SessionArtifactOptions? ArtifactOptions = null,
+    RunInputModel? RunInput = null);

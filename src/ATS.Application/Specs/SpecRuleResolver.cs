@@ -11,7 +11,9 @@ internal sealed class SpecRuleResolver
         IReadOnlyCollection<string> fullKeys,
         SpecDocument specDocument)
     {
-        var fullKeySet = new HashSet<string>(fullKeys, StringComparer.OrdinalIgnoreCase);
+        var fullKeySet = new HashSet<string>(
+            fullKeys.Where(item => !string.IsNullOrWhiteSpace(item)),
+            StringComparer.OrdinalIgnoreCase);
         var rules = specDocument.Rules
             .Where(item => !string.IsNullOrWhiteSpace(item.TargetKey) && fullKeySet.Contains(item.TargetKey))
             .ToList();

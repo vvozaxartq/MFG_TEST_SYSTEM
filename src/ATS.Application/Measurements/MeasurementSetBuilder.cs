@@ -19,6 +19,8 @@ internal sealed class MeasurementSetBuilder
             ? BuildFromDeclaredMeasurements(prefix, declaredMeasurements, rawPayload)
             : BuildFromPayload(prefix, rawPayload);
 
+        EnsureUniqueFullKeys(items, step.Name);
+
         return new MeasurementSet
         {
             Source = step.Name,
@@ -210,5 +212,25 @@ internal sealed class MeasurementSetBuilder
             JsonValueKind.Null => string.Empty,
             _ => element.GetRawText()
         };
+    }
+
+    private static void EnsureUniqueFullKeys(
+        IReadOnlyCollection<MeasurementItem> items,
+        string source)
+    {
+        var duplicateFullKeys = items
+            .Where(item => !string.IsNullOrWhiteSpace(item.FullKey))
+            .GroupBy(item => item.FullKey, StringComparer.OrdinalIgnoreCase)
+            .Where(group => group.Count() > 1)
+            .Select(group => group.Key)
+            .ToList();
+
+        if (duplicateFullKeys.Count == 0)
+        {
+            return;
+        }
+
+        throw new InvalidOperationException(
+            $"Measurement set '{source}' produced duplicate fullKey values: {string.Join(", ", duplicateFullKeys)}.");
     }
 }

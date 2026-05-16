@@ -21,6 +21,8 @@ public sealed class ScriptRunner
         string specPath,
         string scriptName,
         string outputDirectory,
+        SessionArtifactOptions? artifactOptions,
+        RunInputModel? runInput,
         CancellationToken cancellationToken)
     {
         return _testRunner.RunAsync(
@@ -29,7 +31,9 @@ public sealed class ScriptRunner
                 recipePath,
                 specPath,
                 outputDirectory,
-                scriptName),
+                scriptName,
+                artifactOptions,
+                runInput),
             cancellationToken);
     }
 }

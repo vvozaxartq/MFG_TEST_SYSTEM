@@ -8,6 +8,14 @@ public sealed class SpecEvaluationResult
 
     public string RuleType { get; init; } = string.Empty;
 
+    public string Expected { get; init; } = string.Empty;
+
+    public decimal? Minimum { get; init; }
+
+    public decimal? Maximum { get; init; }
+
+    public string Pattern { get; init; } = string.Empty;
+
     public string ActualValue { get; init; } = string.Empty;
 
     public string PassFail { get; init; } = string.Empty;

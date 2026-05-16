@@ -18,6 +18,8 @@ internal sealed class EvaluateStep
         RecipeScriptDefinition step,
         MeasurementSet measurementSet,
         IReadOnlyCollection<SpecRule> rules,
+        DateTimeOffset startedAtUtc,
+        DateTimeOffset completedAtUtc,
         TestContext context)
     {
         var measurements = measurementSet.Items.ToList();
@@ -26,7 +28,24 @@ internal sealed class EvaluateStep
 
         foreach (var measurement in measurements)
         {
-            context.Log($"Measurement '{measurement.FullKey}' = '{measurement.Value}' ({measurement.ValueType}).");
+            context.Log(
+                $"Measurement '{measurement.FullKey}' = '{measurement.Value}' ({measurement.ValueType}).",
+                step.Name);
+            context.LogEvent(
+                "INFO",
+                StructuredLogEntryType.MeasurementCollected,
+                $"Measurement '{measurement.FullKey}' = '{measurement.Value}'.",
+                step.Name,
+                stepName: step.Name,
+                fullKey: measurement.FullKey,
+                status: "Collected",
+                data: new Dictionary<string, object?>
+                {
+                    ["fullKey"] = measurement.FullKey,
+                    ["value"] = measurement.Value,
+                    ["unit"] = measurement.Unit,
+                    ["valueType"] = measurement.ValueType.ToString()
+                });
         }
 
         foreach (var rule in rules)
@@ -53,7 +72,29 @@ internal sealed class EvaluateStep
 
             specResults.Add(evaluationResult);
             context.Log(
-                $"Rule '{evaluationResult.RuleName}' on '{evaluationResult.TargetKey}' => {evaluationResult.PassFail}: {evaluationResult.Reason}");
+                $"Rule '{evaluationResult.RuleName}' on '{evaluationResult.TargetKey}' => {evaluationResult.PassFail} | Spec: {BuildSpecSummary(evaluationResult)} | Actual: '{evaluationResult.ActualValue}' | Reason: {evaluationResult.Reason}",
+                step.Name);
+            context.LogEvent(
+                string.Equals(evaluationResult.PassFail, "Failed", StringComparison.OrdinalIgnoreCase) ? "ERROR" : "INFO",
+                StructuredLogEntryType.SpecEvaluated,
+                $"Rule '{evaluationResult.RuleName}' on '{evaluationResult.TargetKey}' => {evaluationResult.PassFail}.",
+                step.Name,
+                stepName: step.Name,
+                fullKey: evaluationResult.TargetKey,
+                status: evaluationResult.PassFail,
+                data: new Dictionary<string, object?>
+                {
+                    ["ruleName"] = evaluationResult.RuleName,
+                    ["targetKey"] = evaluationResult.TargetKey,
+                    ["ruleType"] = evaluationResult.RuleType,
+                    ["expected"] = evaluationResult.Expected,
+                    ["minimum"] = evaluationResult.Minimum,
+                    ["maximum"] = evaluationResult.Maximum,
+                    ["pattern"] = evaluationResult.Pattern,
+                    ["actualValue"] = evaluationResult.ActualValue,
+                    ["reason"] = evaluationResult.Reason,
+                    ["errorCode"] = evaluationResult.ErrorCode
+                });
         }
 
         var finalStatus = specResults.Any(item => string.Equals(item.PassFail, "Failed", StringComparison.OrdinalIgnoreCase))
@@ -68,7 +109,22 @@ internal sealed class EvaluateStep
             MeasurementSet = measurementSet,
             Measurements = measurements,
             SpecResults = specResults,
-            FinalStatus = finalStatus
+            FinalStatus = finalStatus,
+            StartedAtUtc = startedAtUtc,
+            CompletedAtUtc = completedAtUtc
+        };
+    }
+
+    private static string BuildSpecSummary(SpecEvaluationResult result)
+    {
+        return result.RuleType switch
+        {
+            "Range" => $"min={result.Minimum}, max={result.Maximum}",
+            "Regex" => $"pattern={result.Pattern}",
+            "GreaterThan" => $"expected>{result.Expected}",
+            "LessThan" => $"expected<{result.Expected}",
+            "Bypass" => "bypass",
+            _ => $"expected={result.Expected}"
         };
     }
 }

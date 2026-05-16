@@ -1,0 +1,55 @@
+{
+  "name": "Variable System Recipe",
+  "variables": {
+    "SharedCommand": "GLOBAL",
+    "VoltagePath": "payload.globalVoltage",
+    "CurrentPath": "payload.globalCurrent",
+    "VoltageValue": "12.3",
+    "CurrentValue": "1.4",
+    "VoltageUnit": "V",
+    "VoltageDescription": "GLOBAL-DESC"
+  },
+  "scripts": [
+    {
+      "name": "ReadSnapshot",
+      "prefix": "battery",
+      "command": "READ_${SN}_${SharedCommand}",
+      "variables": {
+        "SharedCommand": "STEP",
+        "VoltagePath": "payload.stepVoltage",
+        "VoltageDescription": "STEP-DESC"
+      },
+      "measurements": [
+        {
+          "key": "voltage",
+          "sourcePath": "${VoltagePath}",
+          "unit": "${VoltageUnit}",
+          "description": "${VoltageDescription}"
+        },
+        {
+          "key": "current",
+          "sourcePath": "${CurrentPath}",
+          "unit": "A",
+          "description": "Current for ${SN}"
+        }
+      ],
+      "simulatedResponse": "{\"payload\":{\"stepVoltage\":\"${VoltageValue}\",\"globalCurrent\":\"${CurrentValue}\",\"serial\":\"${SN}\"}}"
+    }
+  ],
+  "rules": [
+    {
+      "name": "Battery Voltage Range",
+      "targetKey": "battery.voltage",
+      "ruleType": "Range",
+      "min": 11.5,
+      "max": 12.8
+    },
+    {
+      "name": "Battery Current Range",
+      "targetKey": "battery.current",
+      "ruleType": "Range",
+      "min": 1.0,
+      "max": 2.0
+    }
+  ]
+}

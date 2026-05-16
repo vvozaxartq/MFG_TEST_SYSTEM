@@ -31,15 +31,22 @@ public sealed class SpecValidationService
     public Task<ValidationResult> ValidateAsync(
         string specPath,
         string outputDirectory,
+        SessionArtifactOptions? artifactOptions,
+        RunInputModel? runInput,
         CancellationToken cancellationToken)
     {
         cancellationToken.ThrowIfCancellationRequested();
 
-        var context = _sessionFactory.Create("spec validate", outputDirectory, specPath: specPath);
+        var context = _sessionFactory.Create(
+            "spec validate",
+            outputDirectory,
+            artifactOptions,
+            runInput,
+            specPath: specPath);
         var errors = new List<string>();
         var status = "Passed";
 
-        context.Log($"Session '{context.SessionId}' created for 'spec validate'.");
+        context.Log($"Session '{context.SessionId}' created for 'spec validate'.", "spec validate");
 
         try
         {
@@ -48,7 +55,7 @@ public sealed class SpecValidationService
 
             foreach (var error in errors)
             {
-                context.LogError(error);
+                context.LogError(error, "spec validate");
             }
 
             if (errors.Count > 0)
@@ -60,22 +67,23 @@ public sealed class SpecValidationService
         {
             status = "Failed";
             errors.Add(exception.Message);
-            context.LogError(exception.Message);
+            context.LogError(exception.Message, "spec validate");
         }
         catch (JsonException exception)
         {
             status = "Failed";
             var message = $"Invalid JSON content: {exception.Message}";
             errors.Add(message);
-            context.LogError(message);
+            context.LogError(message, "spec validate");
         }
         catch (Exception exception)
         {
             status = "Failed";
             errors.Add(exception.Message);
-            context.LogError(exception.Message);
+            context.LogError(exception.Message, "spec validate");
         }
 
+        var completedAtUtc = DateTimeOffset.UtcNow;
         var result = new ValidationResult
         {
             SessionId = context.SessionId,
@@ -84,11 +92,33 @@ public sealed class SpecValidationService
             TargetPath = context.SpecPath,
             RelatedPath = string.Empty,
             Status = status,
+            OutputDirectory = context.OutputDirectory,
+            ResultJsonPath = context.ArtifactPaths.ResultJsonPath,
+            ResultCsvPath = context.ArtifactPaths.ResultCsvPath,
+            SessionLogPath = context.ArtifactPaths.SessionLogPath,
+            StructuredLogPath = context.ArtifactPaths.StructuredLogPath,
+            RunInput = context.RunInput,
+            SessionInfo = SessionInfoBuilder.Build(context, string.Empty, status, completedAtUtc),
             StartedAtUtc = context.StartedAtUtc,
-            CompletedAtUtc = DateTimeOffset.UtcNow,
+            CompletedAtUtc = completedAtUtc,
             Errors = errors
         };
 
+        context.LogEvent(
+            string.Equals(status, "Passed", StringComparison.OrdinalIgnoreCase) ? "INFO" : "ERROR",
+            StructuredLogEntryType.SessionCompleted,
+            $"Session '{context.SessionId}' completed with status '{status}'.",
+            "spec validate",
+            status: status,
+            data: new Dictionary<string, object?>
+            {
+                ["validationType"] = "spec",
+                ["targetPath"] = context.SpecPath,
+                ["resultJsonPath"] = context.ArtifactPaths.ResultJsonPath,
+                ["resultCsvPath"] = context.ArtifactPaths.ResultCsvPath,
+                ["sessionLogPath"] = context.ArtifactPaths.SessionLogPath,
+                ["structuredLogPath"] = context.ArtifactPaths.StructuredLogPath
+            });
         _artifactWriter.WriteValidationResult(result, context);
         return Task.FromResult(result);
     }

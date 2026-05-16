@@ -1,0 +1,68 @@
+{
+  "name": "All Spec Types Spec",
+  "rules": [
+    {
+      "name": "Battery Voltage Range",
+      "targetKey": "battery.voltage",
+      "ruleType": "Range",
+      "min": 11.5,
+      "max": 12.8,
+      "errorCode": "BATTERY_VOLTAGE_RANGE"
+    },
+    {
+      "name": "Battery Current Less Than",
+      "targetKey": "battery.current",
+      "ruleType": "LessThan",
+      "expected": "1.8",
+      "errorCode": "BATTERY_CURRENT_LIMIT"
+    },
+    {
+      "name": "Serial Regex Match",
+      "targetKey": "dut.serial",
+      "ruleType": "Regex",
+      "pattern": "^ATS-FAKE-[0-9]{3}$",
+      "errorCode": "SERIAL_FORMAT"
+    },
+    {
+      "name": "Model Contains Test",
+      "targetKey": "dut.model",
+      "ruleType": "Contain",
+      "expected": "TEST",
+      "errorCode": "MODEL_CONTAIN"
+    },
+    {
+      "name": "Station Equal",
+      "targetKey": "dut.station",
+      "ruleType": "Equal",
+      "expected": "STATION-A",
+      "errorCode": "STATION_EQUAL"
+    },
+    {
+      "name": "Error State Not Equal",
+      "targetKey": "dut.error_state",
+      "ruleType": "NotEqual",
+      "expected": "FAULT",
+      "errorCode": "ERROR_NOT_EQUAL"
+    },
+    {
+      "name": "Calibration Bypass",
+      "targetKey": "dut.calibration",
+      "ruleType": "Bypass",
+      "message": "Calibration status is informational for this sample."
+    },
+    {
+      "name": "Temperature Greater Than",
+      "targetKey": "env.temperature",
+      "ruleType": "GreaterThan",
+      "expected": "30",
+      "errorCode": "TEMPERATURE_MIN"
+    },
+    {
+      "name": "Leak Rate Less Than",
+      "targetKey": "env.leak_rate",
+      "ruleType": "LessThan",
+      "expected": "0.5",
+      "errorCode": "LEAK_LIMIT"
+    }
+  ]
+}

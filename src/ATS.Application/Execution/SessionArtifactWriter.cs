@@ -19,6 +19,7 @@ public sealed class SessionArtifactWriter
 
     public void WriteTestResult(TestResult result, TestContext context)
     {
+        context.AppendLogBlock(SessionLogReportBuilder.BuildTestSummary(result));
         WriteCommonArtifacts(
             context,
             JsonSerializer.Serialize(result, JsonOptions),
@@ -27,6 +28,7 @@ public sealed class SessionArtifactWriter
 
     public void WriteDeviceResult(DeviceCommandResult result, TestContext context)
     {
+        context.AppendLogBlock(SessionLogReportBuilder.BuildDeviceSummary(result));
         WriteCommonArtifacts(
             context,
             JsonSerializer.Serialize(result, JsonOptions),
@@ -35,6 +37,7 @@ public sealed class SessionArtifactWriter
 
     public void WriteValidationResult(ValidationResult result, TestContext context)
     {
+        context.AppendLogBlock(SessionLogReportBuilder.BuildValidationSummary(result));
         WriteCommonArtifacts(
             context,
             JsonSerializer.Serialize(result, JsonOptions),
@@ -43,15 +46,58 @@ public sealed class SessionArtifactWriter
 
     private static void WriteCommonArtifacts(TestContext context, string jsonPayload, string csvPayload)
     {
-        File.WriteAllText(Path.Combine(context.OutputDirectory, "result.json"), jsonPayload);
-        File.WriteAllText(Path.Combine(context.OutputDirectory, "result.csv"), csvPayload);
-        File.WriteAllLines(Path.Combine(context.OutputDirectory, "session.log"), context.Logs);
+        File.WriteAllText(context.ArtifactPaths.ResultJsonPath, jsonPayload);
+        context.LogEvent(
+            "INFO",
+            StructuredLogEntryType.ArtifactWritten,
+            $"Artifact written: {context.ArtifactPaths.ResultJsonPath}",
+            context.CommandName,
+            status: "Written",
+            data: new Dictionary<string, object?>
+            {
+                ["artifactType"] = "ResultJson",
+                ["path"] = context.ArtifactPaths.ResultJsonPath
+            });
+        File.WriteAllText(context.ArtifactPaths.ResultCsvPath, csvPayload);
+        context.LogEvent(
+            "INFO",
+            StructuredLogEntryType.ArtifactWritten,
+            $"Artifact written: {context.ArtifactPaths.ResultCsvPath}",
+            context.CommandName,
+            status: "Written",
+            data: new Dictionary<string, object?>
+            {
+                ["artifactType"] = "ResultCsv",
+                ["path"] = context.ArtifactPaths.ResultCsvPath
+            });
+        context.LogEvent(
+            "INFO",
+            StructuredLogEntryType.ArtifactWritten,
+            $"Artifact written: {context.ArtifactPaths.SessionLogPath}",
+            context.CommandName,
+            status: "Written",
+            data: new Dictionary<string, object?>
+            {
+                ["artifactType"] = "SessionLog",
+                ["path"] = context.ArtifactPaths.SessionLogPath
+            });
+        context.LogEvent(
+            "INFO",
+            StructuredLogEntryType.ArtifactWritten,
+            $"Artifact written: {context.ArtifactPaths.StructuredLogPath}",
+            context.CommandName,
+            status: "Written",
+            data: new Dictionary<string, object?>
+            {
+                ["artifactType"] = "StructuredLog",
+                ["path"] = context.ArtifactPaths.StructuredLogPath
+            });
     }
 
     private static string BuildTestCsv(TestResult result)
     {
         var builder = new StringBuilder();
-        builder.AppendLine("record_type,step_name,command,prefix,full_key,key,value,value_type,unit,rule_name,target_key,rule_type,pass_fail,error_code,message");
+        builder.AppendLine("record_type,step_name,command,prefix,full_key,key,value,value_type,unit,rule_name,target_key,rule_type,expected,min,max,pattern,pass_fail,error_code,message");
 
         foreach (var step in result.Steps)
         {
@@ -66,7 +112,7 @@ public sealed class SessionArtifactWriter
                     .Append(EscapeCsv(measurement.Value)).Append(',')
                     .Append(EscapeCsv(measurement.ValueType.ToString())).Append(',')
                     .Append(EscapeCsv(measurement.Unit)).Append(',')
-                    .Append(",,,,,")
+                    .Append(",,,,,,,,")
                     .AppendLine();
             }
 
@@ -80,6 +126,10 @@ public sealed class SessionArtifactWriter
                     .Append(EscapeCsv(specResult.RuleName)).Append(',')
                     .Append(EscapeCsv(specResult.TargetKey)).Append(',')
                     .Append(EscapeCsv(specResult.RuleType)).Append(',')
+                    .Append(EscapeCsv(specResult.Expected)).Append(',')
+                    .Append(EscapeCsv(specResult.Minimum?.ToString(CultureInfo.InvariantCulture) ?? string.Empty)).Append(',')
+                    .Append(EscapeCsv(specResult.Maximum?.ToString(CultureInfo.InvariantCulture) ?? string.Empty)).Append(',')
+                    .Append(EscapeCsv(specResult.Pattern)).Append(',')
                     .Append(EscapeCsv(specResult.PassFail)).Append(',')
                     .Append(EscapeCsv(specResult.ErrorCode)).Append(',')
                     .Append(EscapeCsv(specResult.Reason))
@@ -101,6 +151,10 @@ public sealed class SessionArtifactWriter
                 .Append(EscapeCsv(script.RuleName)).Append(',')
                 .Append(EscapeCsv(script.SpecKey)).Append(',')
                 .Append(EscapeCsv(script.Operator)).Append(',')
+                .Append(EscapeCsv(script.Expected)).Append(',')
+                .Append(EscapeCsv(script.Minimum?.ToString(CultureInfo.InvariantCulture) ?? string.Empty)).Append(',')
+                .Append(EscapeCsv(script.Maximum?.ToString(CultureInfo.InvariantCulture) ?? string.Empty)).Append(',')
+                .Append(EscapeCsv(string.Empty)).Append(',')
                 .Append(EscapeCsv(script.Status)).Append(',')
                 .Append(EscapeCsv(script.ErrorCode)).Append(',')
                 .Append(EscapeCsv(script.Message))
@@ -109,7 +163,7 @@ public sealed class SessionArtifactWriter
 
         foreach (var error in result.Errors)
         {
-            builder.Append(EscapeCsv("Error")).Append(",,,,,,,,,,,,,")
+            builder.Append(EscapeCsv("Error")).Append(",,,,,,,,,,,,,,,,,")
                 .Append(EscapeCsv(error))
                 .AppendLine();
         }

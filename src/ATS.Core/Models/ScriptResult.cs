@@ -34,5 +34,7 @@ public sealed class ScriptResult
 
     public string Status { get; init; } = string.Empty;
 
+    public bool CountsTowardFinalStatus { get; init; } = true;
+
     public string Message { get; init; } = string.Empty;
 }

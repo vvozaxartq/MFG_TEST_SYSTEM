@@ -16,6 +16,20 @@ public sealed class DeviceCommandResult
 
     public string Message { get; init; } = string.Empty;
 
+    public string OutputDirectory { get; init; } = string.Empty;
+
+    public string ResultJsonPath { get; init; } = string.Empty;
+
+    public string ResultCsvPath { get; init; } = string.Empty;
+
+    public string SessionLogPath { get; init; } = string.Empty;
+
+    public string StructuredLogPath { get; init; } = string.Empty;
+
+    public RunInputModel RunInput { get; init; } = new();
+
+    public SessionInfo SessionInfo { get; init; } = new();
+
     public DateTimeOffset StartedAtUtc { get; init; }
 
     public DateTimeOffset CompletedAtUtc { get; init; }

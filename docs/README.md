@@ -5,6 +5,7 @@ This folder contains user manuals and system documentation.
 ## Structure
 
 * user-manual/ : user-facing documentation
+* architecture/ : architecture contracts for Core/Application behavior
 * site/ : generated HTML output (do not edit manually)
 
 ## Rule

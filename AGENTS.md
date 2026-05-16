@@ -113,3 +113,36 @@ For every major feature or user-visible change:
 * Always ensure CLI works
 * Always provide minimal working version
 * Do not break existing functionality
+
+---
+
+## FAST REVIEW WORKFLOW (REQUIRED)
+
+Before doing broad repo scans, read files in this order:
+
+1. `AGENTS.md`
+2. `CODEX_PLAN.md`
+3. `CODEX_CONTEXT.md`
+4. `CODEX_CONTEXT_SNAPSHOT.md`
+5. `CHANGELOG.md`
+
+Rules:
+
+* Use `CODEX_CONTEXT.md` for stable project summary
+* Use `CODEX_CONTEXT_SNAPSHOT.md` for current filtered worktree summary
+* Regenerate `CODEX_CONTEXT_SNAPSHOT.md` after meaningful repo changes
+* Prefer filtered summaries over reading large generated artifacts unless the task is artifact-specific
+
+## CONTEXT UPDATE DISCIPLINE (REQUIRED)
+
+After every completed change:
+
+1. Update `CHANGELOG.md`
+2. Regenerate `CODEX_CONTEXT_SNAPSHOT.md` with `powershell -ExecutionPolicy Bypass -File tools/update-codex-context.ps1`
+3. Update `CODEX_CONTEXT.md` only when the stable project summary, architecture state, phase status, or must-do future work has materially changed
+
+Rules:
+
+* `CHANGELOG.md` is the canonical per-change history
+* `CODEX_CONTEXT_SNAPSHOT.md` is the canonical current-state fast review file
+* `CODEX_CONTEXT.md` is not a per-edit log; keep it concise and stable

@@ -12,6 +12,18 @@ dotnet build AutoTestSystem.Next.sln
 dotnet run --project src/ATS.Cli -- test simulate --recipe samples/recipes/demo.recipe.json
 ```
 
+## Run Thin UI
+
+```bash
+dotnet run --project src/ATS.Ui
+```
+
+The UI is a thin shell on top of the existing CLI and artifacts. It can:
+
+* run existing ATS CLI commands
+* load `result.json`, `session.events.jsonl`, `session.log`, or a session folder
+* show session summary, result tree, structured log, and session log views
+
 ---
 
 ## First Test (Simulation)
@@ -30,6 +42,16 @@ ats test run --recipe samples/recipes/phase2.recipe.json --spec samples/specs/ph
 
 ---
 
+## Multi-Measurement Test Run
+
+```bash
+ats test run --recipe samples/recipes/multi-measurement.recipe.json --spec samples/specs/multi-measurement.spec.json
+```
+
+This sample shows one script returning multiple fields such as `voltage` and `current`, while step-level `prefix` values turn them into unique `fullKey` values such as `battery.voltage` and `load.current`.
+
+---
+
 ## Single Script Debug
 
 ```bash
@@ -43,6 +65,8 @@ ats script run --recipe samples/recipes/phase2.recipe.json --spec samples/specs/
 * result.json
 * result.csv
 * session.log
+* `result.json` now keeps per-step `MeasurementSet` data with `rawPayload` plus parsed `items`
+* each step also keeps `measurements` and `specResults` lists so you can trace which `fullKey` and which rule failed
 
 ---
 
@@ -58,9 +82,11 @@ ats script run --recipe samples/recipes/phase2.recipe.json --spec samples/specs/
 
 ## Limitations
 
-* Phase 2 remains CLI-first and does not include UI
+* Core execution remains CLI-first; the current UI is an optional thin shell on top of CLI and artifacts
 * All commands use `FakeDevice`; real hardware is not implemented yet
 * JSON files are the supported input format for recipe and spec data
+* Legacy single-value recipes still work; the runtime automatically wraps them into a one-item `MeasurementSet`
+* The current UI is Windows-only and intentionally thin; it does not replace CLI workflows or implement business logic
 
 ---
 

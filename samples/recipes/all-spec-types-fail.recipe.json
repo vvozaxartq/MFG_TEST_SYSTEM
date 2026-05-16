@@ -1,0 +1,69 @@
+{
+  "name": "All Spec Types Fail Recipe",
+  "prefix": "dut",
+  "scripts": [
+    {
+      "name": "ReadBatterySnapshot",
+      "command": "READ_BATTERY_SNAPSHOT",
+      "prefix": "battery",
+      "measurements": [
+        {
+          "key": "voltage",
+          "unit": "V",
+          "description": "Battery voltage"
+        },
+        {
+          "key": "current",
+          "unit": "A",
+          "description": "Battery current"
+        }
+      ],
+      "simulatedResponse": "{\"voltage\":10.8,\"current\":2.1}"
+    },
+    {
+      "name": "ReadDeviceInfo",
+      "command": "READ_DEVICE_INFO",
+      "measurements": [
+        {
+          "key": "serial",
+          "description": "Device serial number"
+        },
+        {
+          "key": "model",
+          "description": "Device model name"
+        },
+        {
+          "key": "station",
+          "description": "Station identifier"
+        },
+        {
+          "key": "error_state",
+          "description": "Current error state"
+        },
+        {
+          "key": "calibration",
+          "description": "Calibration result"
+        }
+      ],
+      "simulatedResponse": "{\"serial\":\"BAD-001\",\"model\":\"MFG SYSTEM\",\"station\":\"STATION-B\",\"error_state\":\"FAULT\",\"calibration\":\"SKIPPED\"}"
+    },
+    {
+      "name": "ReadEnvironment",
+      "command": "READ_ENVIRONMENT",
+      "prefix": "env",
+      "measurements": [
+        {
+          "key": "temperature",
+          "unit": "C",
+          "description": "Measured temperature"
+        },
+        {
+          "key": "leak_rate",
+          "unit": "sccm",
+          "description": "Measured leak rate"
+        }
+      ],
+      "simulatedResponse": "{\"temperature\":25.0,\"leak_rate\":0.8}"
+    }
+  ]
+}

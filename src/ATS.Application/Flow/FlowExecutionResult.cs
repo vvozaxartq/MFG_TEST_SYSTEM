@@ -12,5 +12,7 @@ public sealed class FlowExecutionResult
 
     public List<ScriptResult> Scripts { get; init; } = new();
 
+    public FlowNodeResult? FlowResultTree { get; init; }
+
     public List<string> Errors { get; init; } = new();
 }

@@ -1,4 +1,3 @@
-using ATS.Core.Devices;
 using ATS.Core.Models;
 
 namespace ATS.Core.Scripts;
@@ -34,7 +33,6 @@ public abstract class ScriptBase
     public string SimulatedResponse { get; }
 
     public abstract Task<ScriptExecutionResult> ExecuteAsync(
-        IDevice device,
-        TestContext context,
+        ScriptExecutionRequest request,
         CancellationToken cancellationToken);
 }

@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\ATS.Cli\ATS.Cli.csproj" />
     <ProjectReference Include="..\..\src\ATS.Application\ATS.Application.csproj" />
     <ProjectReference Include="..\..\src\ATS.Core\ATS.Core.csproj" />
   </ItemGroup>

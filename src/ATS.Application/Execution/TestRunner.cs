@@ -3,6 +3,7 @@ using ATS.Application.Devices;
 using ATS.Application.Flow;
 using ATS.Application.Recipes;
 using ATS.Application.Specs;
+using ATS.Core.Devices;
 using ATS.Core.Models;
 
 namespace ATS.Application.Execution;
@@ -16,6 +17,7 @@ public sealed class TestRunner
     private readonly FlowEngine _flowEngine;
     private readonly SessionFactory _sessionFactory;
     private readonly SessionArtifactWriter _artifactWriter;
+    private readonly IDeviceFactory _deviceFactory;
 
     public TestRunner()
         : this(
@@ -25,7 +27,8 @@ public sealed class TestRunner
             new SpecValidator(),
             new FlowEngine(new SpecEngine()),
             new SessionFactory(),
-            new SessionArtifactWriter())
+            new SessionArtifactWriter(),
+            new FakeDeviceFactory())
     {
     }
 
@@ -36,7 +39,8 @@ public sealed class TestRunner
         SpecValidator specValidator,
         FlowEngine flowEngine,
         SessionFactory sessionFactory,
-        SessionArtifactWriter artifactWriter)
+        SessionArtifactWriter artifactWriter,
+        IDeviceFactory deviceFactory)
     {
         _recipeLoader = recipeLoader;
         _recipeValidator = recipeValidator;
@@ -45,6 +49,7 @@ public sealed class TestRunner
         _flowEngine = flowEngine;
         _sessionFactory = sessionFactory;
         _artifactWriter = artifactWriter;
+        _deviceFactory = deviceFactory;
     }
 
     public async Task<TestResult> RunAsync(TestRunRequest request, CancellationToken cancellationToken)
@@ -52,6 +57,8 @@ public sealed class TestRunner
         var context = _sessionFactory.Create(
             request.CommandName,
             request.OutputDirectory,
+            request.ArtifactOptions,
+            request.RunInput,
             request.RecipePath,
             request.SpecPath,
             request.SelectedScriptName);
@@ -61,9 +68,10 @@ public sealed class TestRunner
         var status = "Error";
         var steps = new List<StepResult>();
         var scripts = new List<ScriptResult>();
+        FlowNodeResult? flowResultTree = null;
         var errors = new List<string>();
 
-        context.Log($"Session '{context.SessionId}' created for '{request.CommandName}'.");
+        context.Log($"Session '{context.SessionId}' created for '{request.CommandName}'.", request.CommandName);
 
         try
         {
@@ -77,7 +85,7 @@ public sealed class TestRunner
             foreach (var error in specErrors.Concat(recipeErrors))
             {
                 errors.Add(error);
-                context.LogError(error);
+                context.LogError(error, request.CommandName);
             }
 
             if (errors.Count == 0)
@@ -85,7 +93,7 @@ public sealed class TestRunner
                 var flowResult = await _flowEngine.RunAsync(
                     recipe,
                     specDocument,
-                    new FakeDevice(),
+                    _deviceFactory.CreateDevice(),
                     context,
                     context.SelectedScriptName,
                     cancellationToken);
@@ -94,6 +102,7 @@ public sealed class TestRunner
                 status = flowResult.Status;
                 steps = flowResult.Steps;
                 scripts = flowResult.Scripts;
+                flowResultTree = flowResult.FlowResultTree;
                 errors.AddRange(flowResult.Errors);
             }
             else
@@ -105,22 +114,23 @@ public sealed class TestRunner
         {
             status = "Invalid";
             errors.Add(exception.Message);
-            context.LogError(exception.Message);
+            context.LogError(exception.Message, request.CommandName);
         }
         catch (JsonException exception)
         {
             status = "Invalid";
             var message = $"Invalid JSON content: {exception.Message}";
             errors.Add(message);
-            context.LogError(message);
+            context.LogError(message, request.CommandName);
         }
         catch (Exception exception)
         {
             status = "Error";
             errors.Add(exception.Message);
-            context.LogError(exception.Message);
+            context.LogError(exception.Message, request.CommandName);
         }
 
+        var completedAtUtc = DateTimeOffset.UtcNow;
         var result = new TestResult
         {
             SessionId = context.SessionId,
@@ -130,13 +140,35 @@ public sealed class TestRunner
             SpecPath = context.SpecPath,
             DeviceName = deviceName,
             Status = status,
+            OutputDirectory = context.OutputDirectory,
+            ResultJsonPath = context.ArtifactPaths.ResultJsonPath,
+            ResultCsvPath = context.ArtifactPaths.ResultCsvPath,
+            SessionLogPath = context.ArtifactPaths.SessionLogPath,
+            StructuredLogPath = context.ArtifactPaths.StructuredLogPath,
+            RunInput = context.RunInput,
+            SessionInfo = SessionInfoBuilder.Build(context, recipeName, status, completedAtUtc),
             StartedAtUtc = context.StartedAtUtc,
-            CompletedAtUtc = DateTimeOffset.UtcNow,
+            CompletedAtUtc = completedAtUtc,
             Steps = steps,
             Scripts = scripts,
+            FlowResultTree = flowResultTree,
             Errors = errors
         };
 
+        context.LogEvent(
+            string.Equals(status, "Passed", StringComparison.OrdinalIgnoreCase) ? "INFO" : "ERROR",
+            StructuredLogEntryType.SessionCompleted,
+            $"Session '{context.SessionId}' completed with status '{status}'.",
+            request.CommandName,
+            status: status,
+            data: new Dictionary<string, object?>
+            {
+                ["recipeName"] = recipeName,
+                ["resultJsonPath"] = context.ArtifactPaths.ResultJsonPath,
+                ["resultCsvPath"] = context.ArtifactPaths.ResultCsvPath,
+                ["sessionLogPath"] = context.ArtifactPaths.SessionLogPath,
+                ["structuredLogPath"] = context.ArtifactPaths.StructuredLogPath
+            });
         _artifactWriter.WriteTestResult(result, context);
         return result;
     }

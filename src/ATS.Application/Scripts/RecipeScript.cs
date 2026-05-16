@@ -31,16 +31,37 @@ internal sealed class RecipeScript : ScriptBase
     }
 
     public override async Task<ScriptExecutionResult> ExecuteAsync(
-        IDevice device,
-        TestContext context,
+        ScriptExecutionRequest request,
         CancellationToken cancellationToken)
     {
-        context.Log($"Executing script '{Name}' ({Command}).");
-        var response = await device.ExecuteAsync(
+        ArgumentNullException.ThrowIfNull(request);
+
+        var context = request.Context;
+        var startedAtUtc = DateTimeOffset.UtcNow;
+        context.Log(
+            $"Executing script '{Name}' ({Command}) attempt {request.AttemptNumber}/{request.Policy.MaxAttempts}.",
+            Name);
+        context.LogEvent(
+            "INFO",
+            StructuredLogEntryType.StepStarted,
+            $"Executing script '{Name}' ({Command}) attempt {request.AttemptNumber}/{request.Policy.MaxAttempts}.",
+            Name,
+            stepName: Name,
+            status: "Started",
+            data: new Dictionary<string, object?>
+            {
+                ["command"] = Command,
+                ["attemptNumber"] = request.AttemptNumber,
+                ["maxAttempts"] = request.Policy.MaxAttempts,
+                ["timeoutMs"] = request.Policy.TimeoutMs,
+                ["continueOnFailure"] = request.Policy.ContinueOnFailure
+            });
+
+        var response = await request.DeviceSession.ExecuteAsync(
             new DeviceCommandRequest
             {
-                Command = Command,
-                SimulatedResponse = SimulatedResponse
+                Command = request.Command,
+                SimulatedResponse = request.SimulatedResponse
             },
             cancellationToken);
 
@@ -51,13 +72,17 @@ internal sealed class RecipeScript : ScriptBase
 
         var collectedAt = DateTimeOffset.UtcNow;
         var measurementSet = _measurementSetBuilder.Build(_recipe, _definition, response.Response, collectedAt);
+        var completedAtUtc = DateTimeOffset.UtcNow;
 
         return new ScriptExecutionResult
         {
             ScriptName = Name,
-            Command = Command,
+            Command = request.Command,
             Prefix = _definition.Prefix,
             SpecKey = SpecKey,
+            StartedAtUtc = startedAtUtc,
+            CompletedAtUtc = completedAtUtc,
+            AttemptCount = request.AttemptNumber,
             MeasurementSet = measurementSet
         };
     }

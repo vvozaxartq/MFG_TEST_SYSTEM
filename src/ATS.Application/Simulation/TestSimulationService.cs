@@ -20,6 +20,8 @@ public sealed class TestSimulationService
     public Task<TestResult> RunAsync(
         string recipePath,
         string outputDirectory,
+        SessionArtifactOptions? artifactOptions,
+        RunInputModel? runInput,
         CancellationToken cancellationToken)
     {
         return _testRunner.RunAsync(
@@ -28,7 +30,9 @@ public sealed class TestSimulationService
                 recipePath,
                 string.Empty,
                 outputDirectory,
-                string.Empty),
+                string.Empty,
+                artifactOptions,
+                runInput),
             cancellationToken);
     }
 }

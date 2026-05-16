@@ -10,5 +10,11 @@ public sealed class ScriptExecutionResult
 
     public string SpecKey { get; init; } = string.Empty;
 
+    public DateTimeOffset StartedAtUtc { get; init; }
+
+    public DateTimeOffset CompletedAtUtc { get; init; }
+
+    public int AttemptCount { get; init; } = 1;
+
     public MeasurementSet MeasurementSet { get; init; } = new();
 }
